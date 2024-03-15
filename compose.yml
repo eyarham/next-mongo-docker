@@ -2,7 +2,19 @@ services:
   web:
     build:
       context: .
+    restart: always
     ports:
       - 3000:3000
     environment:
       NODE_ENV: development
+      MONGODB_URI: mongodb://mongo:27017
+    depends_on:
+      - mongo
+  mongo:
+    container_name: mongo
+    image: mongo
+    restart: always
+    volumes:
+      - ./data:/data/db
+    ports:
+      - "27017:27017"
