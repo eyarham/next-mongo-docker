@@ -127,9 +127,12 @@ const Page: React.FC = () => {
                     <input type="button" value="add" onClick={onAddNewResourceClick} />
                 </div>
             </form>
-            <div style={{ color: "red" }}>
-                {errorMessage}
-            </div>
+            {
+                errorMessage &&
+                <div style={{ color: "red" }}>
+                    {errorMessage}
+                </div>
+            }
         </main>
     )
 }
