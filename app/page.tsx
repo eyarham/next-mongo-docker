@@ -38,7 +38,7 @@ const Page: React.FC = () => {
             if (resourcesToSet) {
                 setResources(resourcesToSet);
             }
-        }``
+        }
     }
     const onAddNewResourceClick = async () => {
         if (newResource.title === "") {
