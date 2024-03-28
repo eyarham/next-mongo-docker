@@ -38,14 +38,14 @@ const Page: React.FC = () => {
             if (resourcesToSet) {
                 setResources(resourcesToSet);
             }
-        }
+        }``
     }
     const onAddNewResourceClick = async () => {
         if (newResource.title === "") {
-            //print error message for title
+            setErrorMessage("Please add a title")
         }
         else if (newResource.url === "") {
-            //print error message for url
+            setErrorMessage("Please add a url")
         }
         else {
             const response = await fetch(`/api`, { method: 'POST', body: JSON.stringify(newResource) });//POST
@@ -55,6 +55,7 @@ const Page: React.FC = () => {
             else {
                 setNewResource({ title: "", url: "" });
                 await refreshData();
+                setErrorMessage("")
             }
         }
     }
