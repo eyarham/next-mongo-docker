@@ -13,9 +13,9 @@ export async function GET(request: Request) {
             .limit(10)
             .toArray();
         return Response.json({ resources });
-    } catch (e) {
+    } catch (e: any) {
         console.error(e);
-        return Response.json({ e });
+        return Response.json({ error: e.message }, { status: 500 });
     }
 }
 
@@ -28,8 +28,8 @@ export async function POST(request: Request) {
             .collection(collection)
             .insertOne(newResource)
         return Response.json({ resources, request });
-    } catch (e) {
+    } catch (e: any) {
         console.error(e);
-        return Response.json({ e, request });
+        return Response.json({ error: e.message }, { status: 500 });
     }
 }
