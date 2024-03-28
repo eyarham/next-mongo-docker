@@ -35,27 +35,30 @@ const Page: React.FC = () => {
         }
     }
     const onAddNewResourceClick = async () => {
-
-        const response = await fetch(`/api`, { method: 'POST', body: JSON.stringify(newResource) });//POST
-        if (!response.ok) {
-            console.error(response.json())
+        if (newResource.title === "") {
+            //print error message for title
+        }
+        else if (newResource.url === "") {
+            //print error message for url
         }
         else {
-            setNewResource({ title: "", url: "" });
-            await refreshData();
+            const response = await fetch(`/api`, { method: 'POST', body: JSON.stringify(newResource) });//POST
+            if (!response.ok) {
+                console.error(response.json())
+            }
+            else {
+                setNewResource({ title: "", url: "" });
+                await refreshData();
+            }
         }
     }
 
     const onResourceTitleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-        if (e.target.value) {
-            setNewResource({ ...newResource, title: e.target.value })
-        }
+        setNewResource({ ...newResource, title: e.target.value })
     }
 
     const onResourceUrlChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-        if (e.target.value) {
-            setNewResource({ ...newResource, url: e.target.value })
-        }
+        setNewResource({ ...newResource, url: e.target.value })
     }
     const onDeleteClick = async (id: any) => {
         const response = await fetch(`/api/${id}`, { method: 'DELETE' });//DELETE
