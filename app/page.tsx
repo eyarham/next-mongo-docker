@@ -11,10 +11,16 @@ const Page: React.FC = () => {
     const [resources, setResources] = useState<Array<Resource>>([]);
     const [newResource, setNewResource] = useState<Resource>({ title: "", url: "" });
     const [openedResource, setOpenedResource] = useState<Resource>();
+    const [errorMessage, setErrorMessage] = useState<string>("");
     useEffect(() => {
         const eff = async () => {
             const response = await fetch(`/api`);//GET all
-            if (response) {
+            if (!response.ok) {
+                const responseJson = await response.json();
+                const errorToSet = responseJson?.error;
+                setErrorMessage(errorToSet)
+            }
+            else {
                 const responseJson = await response.json();
                 const resourcesToSet = responseJson?.resources;
                 if (resourcesToSet) {
@@ -121,6 +127,9 @@ const Page: React.FC = () => {
                     <input type="button" value="add" onClick={onAddNewResourceClick} />
                 </div>
             </form>
+            <div style={{ color: "red" }}>
+                {errorMessage}
+            </div>
         </main>
     )
 }
